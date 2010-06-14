@@ -1,0 +1,39 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.61.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 62864f48b89e75bf15405ed82dd30c8fff259e0c Build.PL
+SHA1 5e14efbabe9b3a560d3aacebc7c4b1b577c1bb50 Changes
+SHA1 9e627682091372eabbb50d3af3404656d87eb080 LICENSE
+SHA1 94ffe2656f6059b3feef31116c4783950f3985ab MANIFEST
+SHA1 5cc756287186374e0cf6a780ca2c2e285dd698e9 META.yml
+SHA1 3dacb2a2a1ab14ae527406ec7750e789dae8c188 Makefile.PL
+SHA1 e72ae3e296547bb682974da0145dba4a0ffa122e README
+SHA1 0ee0c3ce8ac7680fa7815d46e92025eaf9db5c57 lib/POSIX/RT/Clock.pm
+SHA1 e9aef5deaec37d2e08f43029b4450081deb92a66 lib/POSIX/RT/Timer.pm
+SHA1 ce26b5d1fef172e5aee799215ff80d387eb6afd6 lib/POSIX/RT/Timer.xs
+SHA1 5d45a9b754764c9ecffaf4f04f0facf4c41210a0 t/00-load.t
+SHA1 a8598e8bca3d24f52daf45d71c7e5db597bb43b9 t/10-clocks.t
+SHA1 b2b3efbafede07b0a80ca2d777a8dcf612b61fcd t/20-signals.t
+SHA1 1d51e0916c841921a4a9e54be09f0fa34d56d1e8 t/25-callbacks.t
+SHA1 0b1c5a2d59be6bfa7d60c64cd964fea6a0331705 t/pod-coverage.t
+SHA1 640935336dc1123c0069bcf5432bcaedc2cf22d3 t/pod.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAkwWJxYACgkQTd+EWiaICwqUgACgpeg1iW68QfN/TqgJrrj7c4rD
+630AoNHlQ7fL9gmlU2dQKfzVYawV8Sq4
+=OdF5
+-----END PGP SIGNATURE-----
