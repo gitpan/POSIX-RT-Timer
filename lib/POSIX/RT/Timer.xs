@@ -141,7 +141,7 @@ XS(callback) {
     SP -= items;
 
 	siginfo_t* info = (siginfo_t*) SvPV_nolen(action);
-	SV* timer = (SV*)info->si_ptr;
+	SV* timer = (SV*)info->si_value.sival_ptr;
 	if (timer != 0) {
 		MAGIC* magic = mg_find(timer, PERL_MAGIC_ext);
 		SV* callback = (SV*) magic->mg_obj;
@@ -274,8 +274,8 @@ get_timeout(self)
 		timer_t timer;
 		struct itimerspec value;
 	PPCODE:
-		timer = get_timer(self, "get_time");
-		if (timer_gettime(&timer, &value) == -1)
+		timer = get_timer(self, "get_timeout");
+		if (timer_gettime(timer, &value) == -1)
 			die_sys("Couldn't get_time: %s");
 		mXPUSHn(timespec_to_nv(&value.it_value));
 		if (GIMME_V == G_ARRAY)
@@ -291,10 +291,10 @@ set_timeout(self, new_value, new_interval = 0, abstime = 0)
 		timer_t timer;
 		struct itimerspec new_itimer, old_itimer;
 	PPCODE:
-		timer = get_timer(self, "set_time");
+		timer = get_timer(self, "set_timeout");
 		nv_to_timespec(new_value, &new_itimer.it_value);
 		nv_to_timespec(new_interval, &new_itimer.it_interval);
-		if (timer_settime(&timer, (abstime ? TIMER_ABSTIME : 0), &new_itimer, &old_itimer) == -1)
+		if (timer_settime(timer, (abstime ? TIMER_ABSTIME : 0), &new_itimer, &old_itimer) == -1)
 			die_sys("Couldn't set_time: %s");
 		mXPUSHn(timespec_to_nv(&old_itimer.it_value));
 		if (GIMME_V == G_ARRAY)
@@ -426,7 +426,7 @@ get_resolution(self)
 		struct timespec time;
 	CODE:
 		clockid = get_clock(self, "get_resolution");
-		if (clock_gettime(clockid, &time) == -1)
+		if (clock_getres(clockid, &time) == -1)
 			die_sys("Couldn't get resolution: %s");
 		RETVAL = timespec_to_nv(&time);
 	OUTPUT:
