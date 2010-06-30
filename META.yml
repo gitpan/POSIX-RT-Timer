@@ -1,6 +1,6 @@
 ---
 name: POSIX-RT-Timer
-version: 0.004
+version: 0.005
 author:
   - 'Leon Timmermans <leont@cpan.org>'
 abstract: POSIX real-time timers
@@ -19,10 +19,10 @@ configure_requires:
 provides:
   POSIX::RT::Clock:
     file: lib/POSIX/RT/Clock.pm
-    version: 0.004
+    version: 0.005
   POSIX::RT::Timer:
     file: lib/POSIX/RT/Timer.pm
-    version: 0.004
+    version: 0.005
 generated_by: Module::Build version 0.340201
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
