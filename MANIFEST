@@ -14,7 +14,6 @@ README
 t/00-load.t
 t/10-clocks.t
 t/20-signals.t
-t/25-callbacks.t
 t/pod-coverage.t
 t/pod.t
 SIGNATURE    Added here by Module::Build

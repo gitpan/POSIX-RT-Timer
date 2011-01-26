@@ -8,7 +8,7 @@ use warnings FATAL => 'all';
 use XSLoader ();
 use POSIX    ();
 
-our $VERSION = '0.008';
+our $VERSION = '0.009';
 XSLoader::load(__PACKAGE__, $VERSION);
 
 use POSIX::RT::Clock;
@@ -29,7 +29,7 @@ POSIX::RT::Timer - POSIX real-time timers
 
 =head1 VERSION
 
-Version 0.008
+Version 0.009
 
 =cut
 
@@ -79,6 +79,8 @@ The type of clock
 The signal number to send a signal to on timer expiration.
 
 =item * callback
+
+B<This has been disabled for now, and may be permanently removed> because it turns out to be unportable and unstable.
 
 The callback to call on timer expiration. The callback will receive the timer as its only arguments.
 

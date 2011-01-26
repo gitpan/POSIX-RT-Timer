@@ -1,29 +1,29 @@
 ---
-name: POSIX-RT-Timer
-version: 0.008
+abstract: 'POSIX real-time timers'
 author:
   - 'Leon Timmermans <leont@cpan.org>'
-abstract: POSIX real-time timers
-license: perl
-resources:
-  license: http://dev.perl.org/licenses/
 build_requires:
   ExtUtils::CBuilder: 0
   Module::Build: 0
   Test::Exception: 0
   Test::More: 0.82
-requires:
-  perl: 5.008001
 configure_requires:
   Module::Build: 0
-provides:
-  POSIX::RT::Clock:
-    file: lib/POSIX/RT/Clock.pm
-    version: 0.008
-  POSIX::RT::Timer:
-    file: lib/POSIX/RT/Timer.pm
-    version: 0.008
-generated_by: Module::Build version 0.340201
+generated_by: 'Module::Build version 0.3607'
+license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
+name: POSIX-RT-Timer
+provides:
+  POSIX::RT::Clock:
+    file: lib/POSIX/RT/Clock.pm
+    version: 0.009
+  POSIX::RT::Timer:
+    file: lib/POSIX/RT/Timer.pm
+    version: 0.009
+requires:
+  perl: 5.008001
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.009
