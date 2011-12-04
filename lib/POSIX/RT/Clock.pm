@@ -1,4 +1,7 @@
 package POSIX::RT::Clock;
+{
+  $POSIX::RT::Clock::VERSION = '0.010';
+}
 
 use 5.008;
 
@@ -6,40 +9,20 @@ use strict;
 use warnings FATAL => 'all';
 use Carp ();
 
-our $VERSION = '0.009';
-
 use POSIX::RT::Timer;
 
-sub _get_args {
-	my %options = @_;
-	Carp::croak('no time defined') if not defined $options{value};
-	if (defined $options{callback}) {
-		return (callback => $options{callback});
-	}
-	elsif (defined $options{signal}) {
-		return (signal => $options{signal});
-	}
-	else {
-		Carp::croak('Unknown type');
-	}
-}
-
 sub timer {
-	my ($class, %args) = @_;
-	my %options = (
-		interval => 0,
-		value    => 0,
-		class    => 'POSIX::RT::Timer',
-		%args,
-	);
-	my $ret = $class->_timer($options{class}, _get_args(%options));
-	$ret->set_timeout(@options{ 'value', 'interval' });
-	return $ret;
+	my ($self, %options) = @_;
+	return POSIX::RT::Timer->new(%options, clock => $self);
 }
 
 1;    # End of POSIX::RT::Clock
 
-__END__
+#ABSTRACT: POSIX real-time clocks
+
+
+
+=pod
 
 =head1 NAME
 
@@ -47,9 +30,7 @@ POSIX::RT::Clock - POSIX real-time clocks
 
 =head1 VERSION
 
-Version 0.009
-
-=cut
+version 0.010
 
 =head1 SYNOPSIS
 
@@ -142,50 +123,17 @@ Create a timer based on this clock. All arguments except C<clock> as the same as
 
 =head1 AUTHOR
 
-Leon Timmermans, C<< <leont at cpan.org> >>
+Leon Timmermans <fawaka@gmail.com>
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-Please report any bugs or feature requests to C<bug-posix-rt-timer at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=POSIX-RT-Timer>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+This software is copyright (c) 2010 by Leon Timmermans.
 
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc POSIX::RT::Clock
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=POSIX-RT-Timer>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/POSIX-RT-Timer>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/POSIX-RT-Timer>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/POSIX-RT-Timer/>
-
-=back
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2010 Leon Timmermans.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
+
+
+__END__
+

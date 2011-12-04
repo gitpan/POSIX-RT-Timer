@@ -1,34 +1,38 @@
 use 5.008001;
 use strict;
 use warnings;
+use Devel::CheckLib;
 use Module::Build;
 
+my @extra_linker_flags = map { "-l$_" } grep { check_lib(lib => $_) } qw/rt/;
+
 if ($^O eq 'MSWin32') {
-	print STDERR "OS not supported\n";
-	exit 0;
+  print STDERR "OS not supported\n";
+  exit 0;
 }
 
 my $builder = Module::Build->new(
-    module_name         => 'POSIX::RT::Timer',
-    license             => 'perl',
-    dist_author         => q{Leon Timmermans <leont@cpan.org>},
-    dist_version_from   => 'lib/POSIX/RT/Timer.pm',
-	configure_requires  => {
-		'Module::Build' => 0,
-	},
-	build_requires      => {
-		'ExtUtils::CBuilder' => 0,
-		'Module::Build' => 0,
-		'Test::More'    => 0.82, #note()
-		'Test::Exception' => 0,
-	},
-	requires            => {
-		perl            => 5.008001,
-	},
-    add_to_cleanup      => [ 'POSIX-RT-Timer-*' ],
-    create_makefile_pl  => 'small',
-	extra_linker_flags  => [ '-lrt' ],
-	sign                => 1,
+  module_name         => 'POSIX::RT::Timer',
+  'build_requires' => {
+    'File::Find' => '0',
+    'File::Temp' => '0',
+    'Module::Build' => '0.3601',
+    'Test::Exception' => '0',
+    'Test::More' => '0',
+    'Time::HiRes' => '0'
+  },
+  'configure_requires' => {
+    'Module::Build' => '0.3601'
+  },
+  'requires' => {
+    'Carp' => '0',
+    'POSIX' => '0',
+    'XSLoader' => '0',
+    'perl' => '5.008001',
+    'strict' => '0',
+    'warnings' => '0'
+  },
+  extra_linker_flags  => \@extra_linker_flags,
 );
 
 $builder->create_build_script();

@@ -1,4 +1,7 @@
 package POSIX::RT::Timer;
+{
+  $POSIX::RT::Timer::VERSION = '0.010';
+}
 
 use 5.008001;
 
@@ -8,20 +11,30 @@ use warnings FATAL => 'all';
 use XSLoader ();
 use POSIX    ();
 
-our $VERSION = '0.009';
-XSLoader::load(__PACKAGE__, $VERSION);
-
-use POSIX::RT::Clock;
+XSLoader::load(__PACKAGE__, __PACKAGE__->VERSION);
 
 sub new {
-	my ($class, %options) = @_;
-	my $clock = POSIX::RT::Clock->new(delete $options{clock} || 'realtime');
-	return $clock->timer(%options, class => $class);
+	my ($class, %args) = @_;
+
+	my %options = (
+		interval => 0,
+		value    => 0,
+		clock    => 'realtime',
+		ident    => 0,
+		%args,
+	);
+	my $ret = $class->_new(@options{qw/clock signal ident/});
+	$ret->set_timeout(@options{ 'value', 'interval' });
+	return $ret;
 }
 
 1;    # End of POSIX::RT::Timer
 
-__END__
+#ABSTRACT: POSIX real-time timers
+
+
+
+=pod
 
 =head1 NAME
 
@@ -29,26 +42,19 @@ POSIX::RT::Timer - POSIX real-time timers
 
 =head1 VERSION
 
-Version 0.009
-
-=cut
+version 0.010
 
 =head1 SYNOPSIS
 
  use POSIX::RT::Timer;
 
- my $timer = POSIX::RT::Timer->new(value => 1, callback => sub {
-     my $timer = shift;
-	 # do something
- });
+ my $timer = POSIX::RT::Timer->new(value => 1, signal => $signo, id => 42);
 
 =head1 DESCRIPTION
 
-This module provides for timers. Unlike getitimer/setitimer an arbitrary number of timers is supported. There are two kinds of timers: signal timers and callback timers.
+This module provides for timers. Unlike getitimer/setitimer an arbitrary number of timers is supported.
 
 Signal timers send a signal to the process, much like itimers. You can specify which signal is sent, using realtime signals is recommended.
-
-Callback timers call a callback on expiration. They are actually implemented by a signal handler on C<$POSIX::RT::Timer::SIGNO>. The value of this variable can be set B<before> loading this module. Callbacks are called with the timer as their only argument.
 
 =head1 METHODS
 
@@ -72,25 +78,17 @@ The value the timer is set to after expiration. If this is set to 0, it is a one
 
 =item * clock = 'realtime'
 
-The type of clock
+The type of clock. This must either be the stringname of a supported clock or a L<POSIX::RT::Clock|POSIX::RT::Clock> object.
 
 =item * signal
 
 The signal number to send a signal to on timer expiration.
 
-=item * callback
+=item * id
 
-B<This has been disabled for now, and may be permanently removed> because it turns out to be unportable and unstable.
-
-The callback to call on timer expiration. The callback will receive the timer as its only arguments.
+An integer identifier added to the signal. Do note that perl's default signal handling throws away this information. You'll have to use either unsafe signals, with a risk of crashing your program, or a synchronous signal receiving mechanism (such as L<POSIX::RT::Signal|POSIX::RT::Signal> or L<Linux::FD::Signal|Linux::FD::Signal>), which may ruin your reason for using timers. YMMV.
 
 =back
-
-Signal and callback options are mutually exclusive. It is mandatory to set one of these. Signal timers can not be converted into callback timers or reverse.
-
-=item * get_clocks()
-
-Get a list of all supported clocks by their names.
 
 =back
 
@@ -110,66 +108,21 @@ Set the timer and interval values. If C<$abstime> is true, they are absolute val
 
 Get the overrun count for the timer. The timer overrun count is the number of additional timer expirations that occurred since the signal was sent.
 
-=item * get_callback()
-
-Get the callback function.
-
-=item * set_callback($callback)
-
-Set the callback function.
-
 =back
 
 =head1 AUTHOR
 
-Leon Timmermans, C<< <leont at cpan.org> >>
+Leon Timmermans <fawaka@gmail.com>
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-Perl can interact weirdly with signals. Beware of the dragons.
+This software is copyright (c) 2010 by Leon Timmermans.
 
-POSIX::RT::Timer currently uses an unsafe signal handler for callback handlers.
-
-Please report any bugs or feature requests to C<bug-posix-rt-timer at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=POSIX-RT-Timer>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc POSIX::RT::Timer
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=POSIX-RT-Timer>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/POSIX-RT-Timer>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/POSIX-RT-Timer>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/POSIX-RT-Timer/>
-
-=back
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2010 Leon Timmermans.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
+
+
+__END__
+

@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.63.
+signed via the Module::Signature module, version 0.68.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,28 +14,31 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 6d5f77276f333659ea13ed7903be4ad68954de53 Build.PL
-SHA1 d1b40acb753f4fc8144c263f3cf70684e9c05609 Changes
-SHA1 0d37c19e724ecfd8a421dcf077153e823cee1438 LICENSE
-SHA1 20361fa15cf0ac813fccd226f874fe42471c01a0 MANIFEST
-SHA1 116f834f8ea3a0a9b9503437bde0bb378c68cf76 META.yml
-SHA1 d25da0067cc30d9117d53013a488da8141b66c46 Makefile.PL
-SHA1 e72ae3e296547bb682974da0145dba4a0ffa122e README
+SHA1 083a25917776de95f9dfe6db41359ad8dd9e77f5 Build.PL
+SHA1 2e3c3411c5bd300c7518cc88b48a80a84bd35f8c Changes
+SHA1 93dd6a0903eb2b3d5fb47d9cd98505eab798c867 INSTALL
+SHA1 157b00fae6a2ed99f867d86298ed2d383290e6c7 LICENSE
+SHA1 f97249e4bb7a6aecb615b688157e0aa83e15bac9 MANIFEST
+SHA1 08bf45d05db8513ed5186bd3a0fd0599d7dad119 META.json
+SHA1 2ef478f82ea0d94ae2f0cce9193f38c10934df6e META.yml
+SHA1 c7f8605b4f77ba6a46ab68b2424acd0d2fe501b5 README
+SHA1 a681dbda0d8b5825526c1d635befb361eec557c3 dist.ini
 SHA1 5488e351844ab441265cf69735727f13523bddce examples/clock_info.pl
-SHA1 0c23d56ccb7aadc200111a6c5ae9f6288f122195 lib/POSIX/RT/Clock.pm
+SHA1 6b063f27fd43e874db314572ec73f05f5cdbea52 lib/POSIX/RT/Clock.pm
 SHA1 c8dbe0520cb67891a23e12c4805a104e10b937ab lib/POSIX/RT/Clock_Timer.h
-SHA1 c264be0db659dc06045f9932cd4347314eb28636 lib/POSIX/RT/Timer.pm
-SHA1 4a33b870e68d46df3b70fe89d0ba6fb5b04ae520 lib/POSIX/RT/Timer.xs
-SHA1 847ddd74867e960646b4c166ab42047db4f9a1c4 lib/POSIX/RT/ppport.h
-SHA1 5d45a9b754764c9ecffaf4f04f0facf4c41210a0 t/00-load.t
+SHA1 b9c936851073d495b117264a4c17101c63bbf5c2 lib/POSIX/RT/Timer.pm
+SHA1 ccc353efe3fee8e93108362122073d6cb84104d5 lib/POSIX/RT/Timer.xs
+SHA1 95394e2d31aecb73a3c6cee85d7a7859a72b183a lib/POSIX/RT/ppport.h
+SHA1 3cbe905b92fbc69d59a06031d5ce6c837b352aa2 t/00-compile.t
 SHA1 8f112eddcf1178ecb7a2af763211d48f1c9b4f7b t/10-clocks.t
-SHA1 b2b3efbafede07b0a80ca2d777a8dcf612b61fcd t/20-signals.t
-SHA1 0b1c5a2d59be6bfa7d60c64cd964fea6a0331705 t/pod-coverage.t
-SHA1 640935336dc1123c0069bcf5432bcaedc2cf22d3 t/pod.t
+SHA1 b2b3efbafede07b0a80ca2d777a8dcf612b61fcd t/20-timer.t
+SHA1 6ea81e3865946a14536f97ccc65fee4b218c8148 t/release-kwalitee.t
+SHA1 9433c240fe590bc404ab68ff63984df763e347ed t/release-pod-coverage.t
+SHA1 b30cbdfaf935017c4568c0c91b242438cb87786e t/release-pod-syntax.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAk0/ZmgACgkQTd+EWiaICwpM6ACfSI+IIS/03w5//tpj9/+n3ZmQ
-fd8AmwVVj3V7hsOvGpMcZ4KjTu/ERy41
-=cMx4
+iEYEARECAAYFAk7bbE4ACgkQTd+EWiaICwoWmACdHXbPh+Cs97HNz5ux2hY8xrnb
+ocEAoImxPAE6cx5Yoaf/IF8TOtPc9/K+
+=brbn
 -----END PGP SIGNATURE-----
