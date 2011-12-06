@@ -17,11 +17,14 @@ my $builder = Module::Build->new(
     'File::Find' => '0',
     'File::Temp' => '0',
     'Module::Build' => '0.3601',
+    'POSIX::RT::Signal' => '0',
+    'Signal::Mask' => '0',
     'Test::Exception' => '0',
-    'Test::More' => '0',
+    'Test::More' => '0.88',
     'Time::HiRes' => '0'
   },
   'configure_requires' => {
+    'Devel::CheckLib' => '0',
     'Module::Build' => '0.3601'
   },
   'requires' => {
