@@ -14,22 +14,23 @@ if ($^O eq 'MSWin32') {
 my $builder = Module::Build->new(
   module_name         => 'POSIX::RT::Timer',
   'build_requires' => {
+    'Config' => '0',
     'File::Find' => '0',
     'File::Temp' => '0',
     'Module::Build' => '0.3601',
+    'POSIX' => '0',
     'POSIX::RT::Signal' => '0',
     'Signal::Mask' => '0',
     'Test::Exception' => '0',
     'Test::More' => '0.88',
-    'Time::HiRes' => '0'
+    'Time::HiRes' => '0',
+    'threads' => '0'
   },
   'configure_requires' => {
     'Devel::CheckLib' => '0',
     'Module::Build' => '0.3601'
   },
   'requires' => {
-    'Carp' => '0',
-    'POSIX' => '0',
     'XSLoader' => '0',
     'perl' => '5.008001',
     'strict' => '0',

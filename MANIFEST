@@ -6,7 +6,6 @@ MANIFEST
 META.json
 META.yml
 README
-SIGNATURE
 dist.ini
 examples/clock_info.pl
 lib/POSIX/RT/Clock.pm

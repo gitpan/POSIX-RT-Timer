@@ -1,13 +1,12 @@
 package POSIX::RT::Clock;
 {
-  $POSIX::RT::Clock::VERSION = '0.011';
+  $POSIX::RT::Clock::VERSION = '0.012';
 }
 
 use 5.008;
 
 use strict;
 use warnings FATAL => 'all';
-use Carp ();
 
 use POSIX::RT::Timer;
 
@@ -30,7 +29,7 @@ POSIX::RT::Clock - POSIX real-time clocks
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 
@@ -85,9 +84,9 @@ A clock that counts time the process spent in userspace. This is supported only 
 
 =back
 
-=item * get_cpuclock($pid = 0)
+=item * get_cpuclock($id = 0)
 
-Get the cpu-time clock for the process specified in $pid. If $pid is zero the current process is taken, this is the same as the C<process> clock. This call is currently not supported on most operating systems, despite being defined in POSIX.
+Get the cpu-time clock for C<$id>. If C<$id> is an integer, it's interpreted as a PID and a per process clock is created, with zero having the special meaning of the current process (this is the same as the C<process> clock). If C<$id> is a C<thread> object, a per thread clock is created. This call is currently not supported on many operating systems.
 
 =back
 

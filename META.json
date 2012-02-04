@@ -4,7 +4,7 @@
       "Leon Timmermans <fawaka@gmail.com>"
    ],
    "dynamic_config" : "1",
-   "generated_by" : "Dist::Zilla version 4.300003, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640",
    "license" : [
       "perl_5"
    ],
@@ -27,8 +27,6 @@
       },
       "runtime" : {
          "requires" : {
-            "Carp" : 0,
-            "POSIX" : 0,
             "XSLoader" : 0,
             "perl" : "5.008001",
             "strict" : 0,
@@ -37,13 +35,16 @@
       },
       "test" : {
          "requires" : {
+            "Config" : 0,
             "File::Find" : 0,
             "File::Temp" : 0,
+            "POSIX" : 0,
             "POSIX::RT::Signal" : 0,
             "Signal::Mask" : 0,
             "Test::Exception" : 0,
             "Test::More" : "0.88",
-            "Time::HiRes" : 0
+            "Time::HiRes" : 0,
+            "threads" : 0
          }
       }
    },
@@ -59,6 +60,6 @@
          "web" : "http://github.com/Leont/posix-rt-timer"
       }
    },
-   "version" : "0.011"
+   "version" : "0.012"
 }
 
