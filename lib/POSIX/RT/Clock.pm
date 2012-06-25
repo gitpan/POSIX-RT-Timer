@@ -1,6 +1,6 @@
 package POSIX::RT::Clock;
 {
-  $POSIX::RT::Clock::VERSION = '0.013';
+  $POSIX::RT::Clock::VERSION = '0.014';
 }
 
 use 5.008;
@@ -29,7 +29,7 @@ POSIX::RT::Clock - POSIX real-time clocks
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 
