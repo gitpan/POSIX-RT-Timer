@@ -78,9 +78,10 @@ static SV* S_create_clock(pTHX_ clockid_t clockid, const char* class) {
 static int my_clock_nanosleep(pTHX_ clockid_t clockid, int flags, const struct timespec* request, struct timespec* remain) {
 	int ret;
 	ret = clock_nanosleep(clockid, flags, request, remain);
-	if (ret != 0 && ret != EINTR) {
+	if (ret != 0) {
 		errno = ret;
-		die_sys("Could not sleep: %s");
+		if (ret != EINTR)
+			die_sys("Could not sleep: %s");
 	}
 	return ret;
 }
@@ -93,6 +94,7 @@ static pthread_t* S_get_pthread(pTHX_ SV* thread_handle) {
 	SV* tmp;
 	pthread_t* ret;
 	dSP;
+	SAVETMPS;
 	PUSHMARK(SP);
 	PUSHs(thread_handle);
 	PUTBACK;
@@ -100,6 +102,7 @@ static pthread_t* S_get_pthread(pTHX_ SV* thread_handle) {
 	SPAGAIN;
 	tmp = POPs;
 	ret = INT2PTR(pthread_t* ,SvUV(tmp));
+	FREETMPS;
 	return ret;
 }
 #define get_pthread(handle) S_get_pthread(aTHX_ handle)

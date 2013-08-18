@@ -1,6 +1,6 @@
 package POSIX::RT::Clock;
 {
-  $POSIX::RT::Clock::VERSION = '0.014';
+  $POSIX::RT::Clock::VERSION = '0.015';
 }
 
 use 5.008;
@@ -19,7 +19,7 @@ sub timer {
 
 #ABSTRACT: POSIX real-time clocks
 
-
+__END__
 
 =pod
 
@@ -29,7 +29,7 @@ POSIX::RT::Clock - POSIX real-time clocks
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 
@@ -132,7 +132,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

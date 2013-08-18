@@ -14,7 +14,6 @@ if ($^O eq 'MSWin32') {
 my $builder = Module::Build->new(
   module_name         => 'POSIX::RT::Timer',
   'build_requires' => {
-    'Config' => '0',
     'File::Find' => '0',
     'File::Temp' => '0',
     'Module::Build' => '0.3601',
