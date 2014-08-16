@@ -1,19 +1,11 @@
 package POSIX::RT::Clock;
-{
-  $POSIX::RT::Clock::VERSION = '0.015';
-}
-
+$POSIX::RT::Clock::VERSION = '0.016';
 use 5.008;
 
 use strict;
 use warnings FATAL => 'all';
 
 use POSIX::RT::Timer;
-
-sub timer {
-	my ($self, %options) = @_;
-	return POSIX::RT::Timer->new(%options, clock => $self);
-}
 
 1;    # End of POSIX::RT::Clock
 
@@ -23,13 +15,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 POSIX::RT::Clock - POSIX real-time clocks
 
 =head1 VERSION
 
-version 0.015
+version 0.016
 
 =head1 SYNOPSIS
 
@@ -117,6 +111,22 @@ Sleep a C<$time> seconds on this clock. Unlike C<sleep>, it will retry on interr
 =item * timer(%options)
 
 Create a timer based on this clock. All arguments except C<clock> as the same as in C<POSIX::RT::Timer::new>.
+
+=item * handle
+
+This returns the raw handle to the clock.
+
+=back
+
+=head1 SEE ALSO
+
+A low-level interface to POSIX clocks is also provided by:
+
+=over 4
+
+=item * Time::HiRes
+
+=item * POSIX::2008
 
 =back
 

@@ -1,8 +1,5 @@
 package POSIX::RT::Timer;
-{
-  $POSIX::RT::Timer::VERSION = '0.015';
-}
-
+$POSIX::RT::Timer::VERSION = '0.016';
 use 5.008001;
 
 use strict;
@@ -12,21 +9,6 @@ use XSLoader ();
 
 XSLoader::load(__PACKAGE__, __PACKAGE__->VERSION);
 
-sub new {
-	my ($class, %args) = @_;
-
-	my %options = (
-		interval => 0,
-		value    => 0,
-		clock    => 'realtime',
-		ident    => 0,
-		%args,
-	);
-	my $ret = $class->_new(@options{qw/clock signal ident/});
-	$ret->set_timeout(@options{ 'value', 'interval' });
-	return $ret;
-}
-
 1;    # End of POSIX::RT::Timer
 
 #ABSTRACT: POSIX real-time timers
@@ -35,13 +17,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 POSIX::RT::Timer - POSIX real-time timers
 
 =head1 VERSION
 
-version 0.015
+version 0.016
 
 =head1 SYNOPSIS
 
@@ -51,9 +35,17 @@ version 0.015
 
 =head1 DESCRIPTION
 
-This module provides for timers. Unlike getitimer/setitimer an arbitrary number of timers is supported.
+This module provides for POSIX Real-Time timers. There timers send a signal to the process much like getitimer/setitimer but have various improvements:
 
-Signal timers send a signal to the process, much like itimers. You can specify which signal is sent, using realtime signals is recommended.
+=over 4
+
+=item * An arbitrary number of timers is supported.
+
+=item * Delivery to any signal is allowed, though using L<realtime signals|POSIX::RT::Signal> is recommended.
+
+=item * Time measurement on a variety of clocks is supported.
+
+=back
 
 =head1 METHODS
 
@@ -106,6 +98,10 @@ Set the timer and interval values. If C<$abstime> is true, they are absolute val
 =item * get_overrun()
 
 Get the overrun count for the timer. The timer overrun count is the number of additional timer expirations that occurred since the signal was sent.
+
+=item * handle
+
+This returns the raw handle to the timer.
 
 =back
 
