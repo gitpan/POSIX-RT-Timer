@@ -8,6 +8,7 @@ META.json
 META.yml
 README
 dist.ini
+examples/clock_bench.pl
 examples/clock_info.pl
 examples/timer_info.pl
 lib/POSIX/RT/Clock.pm

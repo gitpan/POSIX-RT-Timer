@@ -12,6 +12,7 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+#define NEED_mg_findext
 #include "ppport.h"
 
 #include <signal.h>
@@ -102,11 +103,9 @@ static clockid_t S_get_clock(pTHX_ SV* ref, const char* funcname) {
 }
 #define get_clock(ref, func) S_get_clock(aTHX_ ref, func)
 
-#ifdef SIGEV_THREAD_ID
+#if defined(SIGEV_THREAD_ID) && defined(SYS_gettid)
 #include <sys/syscall.h>
-static inline Pid_t gettid() {
-	return syscall(SYS_gettid);
-}
+#define gettid() syscall(SYS_gettid)
 #ifndef sigev_notify_thread_id
 #define sigev_notify_thread_id   _sigev_un._tid
 #endif
@@ -163,7 +162,7 @@ typedef struct _timer_init {
 	IV signo;
 	IV ident;
 	struct itimerspec itimer;
-	bool absolute;
+	int flags;
 } timer_init;
 
 static void S_timer_args(pTHX_ timer_init* para, SV** begin, Size_t items) {
@@ -194,7 +193,7 @@ static void S_timer_args(pTHX_ timer_init* para, SV** begin, Size_t items) {
 				nv_to_timespec(SvNV(value), &para->itimer.it_interval);
 			}
 			else if (strEQ(current, "absolute")) {
-				para->absolute = 1;
+				para->flags |= TIMER_ABSTIME;
 			}
 			else
 				goto fail;
@@ -216,7 +215,7 @@ static SV* S_timer_instantiate(pTHX_ timer_init* para, const char* class, Size_t
 	if (para->signo < 0)
 		Perl_croak(aTHX_ "No valid signal was given");
 
-#ifdef SIGEV_THREAD_ID
+#ifdef gettid
 	event.sigev_notify           = SIGEV_THREAD_ID;
 	event.sigev_notify_thread_id = gettid();
 #else
@@ -231,7 +230,7 @@ static SV* S_timer_instantiate(pTHX_ timer_init* para, const char* class, Size_t
 		Safefree(timer);
 		die_sys("Couldn't create timer: %s");
 	}
-	if (timer_settime(*timer, (para->absolute ? TIMER_ABSTIME : 0), &para->itimer, NULL) < 0)
+	if (timer_settime(*timer, para->flags, &para->itimer, NULL) < 0)
 		die_sys("Couldn't set_time: %s");
 
 	tmp = newSV(0);
